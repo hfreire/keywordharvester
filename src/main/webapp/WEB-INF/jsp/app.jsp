@@ -38,7 +38,7 @@
 			<div class="offset4 span8">
 				<form class="navbar-search" onsubmit="return false">
 	  					<input type="text" class="search-query input-xlarge" placeholder="Search">
-	  					<button id="search-button" class="btn btn-primary" type="button" data-loading-text="Searching...">Search</button>
+	  					<button id="search-button" class="btn btn-primary" type="button" data-loading-text="Searching..."><i class="icon-search"></i> Search</button>
 
 					<div class="api-selection">
 					<label class="radio inline">
@@ -57,26 +57,27 @@
 		<div class="row">
 			<div class="offset4 span8">
 
-<div class="tabbable">
-  <ul class="nav nav-tabs">
-    <li class="active"><a href="#list" data-toggle="tab">List</a></li>
-    <li><a href="#graph" data-toggle="tab">Graph</a></li>
-  </ul>
-  <div class="tab-content">
-    <div class="tab-pane active" id="list">
-		<div id="search-list"></div>
-    </div>
-    <div class="tab-pane" id="graph">
-		<div id="search-graph"></div>
-    </div>
-  </div>
-</div>
+				<div class="tabbable">
+  					<ul class="nav nav-tabs">
+    					<li class="active"><a href="#list" data-toggle="tab"><i class="icon-list"></i> List</a></li>
+    					<li><a href="#graph" data-toggle="tab"><i class="icon-sitemap"></i> Graph</a></li>
+  					</ul>
+  					<div class="tab-content">
+    					<div class="tab-pane active" id="list">
+								<div id="search-list"></div>
+    					</div>
+    					<div class="tab-pane" id="graph">
+							<div id="search-graph"></div>
+    					</div>
+  					</div>
+				</div>
 			</div>
 		</div
 	</script>
 	<script type="text/html" id='search-list-item'>
 			<td><@= keyword.text @></td>
 			<td><@= relevancy @></td>
+			<td><a href="#search/<@= keyword.text @>" style="width:100%;display:block;"><i class="icon-search"></i></a></td>
 	</script>
 	<script src="/js/lib/jquery.min.js"></script>
 	<script src="/js/lib/jquery.form.js"></script>

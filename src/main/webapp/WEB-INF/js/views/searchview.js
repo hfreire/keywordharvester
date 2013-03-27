@@ -22,6 +22,7 @@ window.SearchView = Backbone.View.extend({
 		this.model.set({id: $('input[placeholder=Search]').val()}).fetch({
 			data : $.param({ 'api': $('input[checked=checked]').val()}),
 			success : function(model) {
+				$('input[placeholder=Search]').val(model.id)
 				$('#search-button').button('reset');
 				$('#search-list').spin(false);
 				

@@ -10,6 +10,7 @@
 	var AppRouter = Backbone.Router.extend({
 		routes : {
 			"" : "showSearch",
+			"search/:id" : "doSearch",
 		},
 
 		showView : function(selector, view) {
@@ -22,15 +23,19 @@
 		},
 		
 		showSearch : function(id) {
-			app.showView('#search', new SearchView({model: app.keyword}));
+			app.currentView = app.showView('#search', new SearchView({model: app.keyword}));
+		},
+		
+		doSearch : function(id) {
+			$('input[placeholder=Search]').val(id);
+			app.currentView.submitted();
 		}
 	});
 	
 	app = new AppRouter();
 	app.keyword = new KeywordModel();
 	Backbone.history.start();
-	
-	//$('#search-box').spin('large', 'gray');
+
 })();
 
 _.templateSettings = {
