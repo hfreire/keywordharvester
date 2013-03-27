@@ -1,7 +1,55 @@
 #app {
-	padding: 250px 0 0 0;
+	padding: 100px 0 0 0;
+}
+
+#header {
+	text-align: center;
+}
+
+#footer {
+	text-align: center;
+}
+
+#footer a {
+	color: #dddddd
+}
+
+.navbar-search {
+	margin-top: 60px;
+	float: none;
+	text-align: center;
+}
+
+.api-selection {
+	margin-top: 20px;
+}
+.api-selection label.radio.inline {
+	margin-right: 20px;
 }
 
 #search-list {
 	margin-top: 40px;
+	min-height: 160px;
+}
+
+#search-graph {
+	min-height: 200px;	
+}
+
+#search-button {
+	width: 100px;
+}
+
+.tabbable {
+	margin-top: 100px;
+}
+
+#search-graph {
+	width: 100%;
+	height: 100%;
+}
+            
+#search-graph > svg {
+	width: 100%;
+	height: 100%; 
 }

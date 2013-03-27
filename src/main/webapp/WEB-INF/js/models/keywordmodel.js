@@ -2,7 +2,7 @@ window.KeywordModel = Backbone.RelationalModel.extend({
         urlRoot: "/api/keyword",
         defaults: {
             "id": null,
-            "text": ""
+            "text": "",
           },
           relations: [{
       		type: 'HasMany',

@@ -12,18 +12,77 @@ window.SearchView = Backbone.View.extend({
 	},
 	
 	events : {
-		"click form button" : "submitted"
+		"click form button" : "submitted",
 	},
 	
-	submitted : function(event) {		 
+	submitted : function(event) {
+		if ($('input[placeholder=Search]').val() == "")
+			return;
+
 		this.model.set({id: $('input[placeholder=Search]').val()}).fetch({
+			data : $.param({ 'api': $('input[checked=checked]').val()}),
 			success : function(model) {
+				$('#search-button').button('reset');
+				$('#search-list').spin(false);
+				
+				if (model.get('message')) {
+					model.clear();
+					return;
+				}
+				
 				$('#search-list').html(new SearchListView({model : model.get('relatedKeywords')}).render().el);
+				
+				var graph = Viva.Graph.graph();
+				graph.addNode(model.get('text'), model);
+				
+				for (var i = 0; i < model.get('relatedKeywords').length; i++) {
+					var relatedKeyword = model.get('relatedKeywords').models[i];
+				    graph.addNode(relatedKeyword.get('keyword').text, relatedKeyword);
+				    graph.addLink(model.get('text'), relatedKeyword.get('keyword').text);
+				}
+
+				var graphics = Viva.Graph.View.svgGraphics();
+				graphics.node(function(node) {
+
+				var ui = Viva.Graph.svg('g'),
+		                  // Create SVG text element with user id as content
+		                  svgText = Viva.Graph.svg('text').attr('y', '-36px').text(node.id),
+		                  img = Viva.Graph.svg('circle')
+		                     .attr('r', node.id == model.get('text') ? 32 : 12)
+		                     .attr('fill', '#004DFF');
+		            
+		              ui.append(svgText);
+		              ui.append(img);
+		              return ui;
+				       
+				    })
+				    .placeNode(function(nodeUI, pos){
+				        // Shift image to let links go to the center:
+		                nodeUI.attr('transform', 
+	                            'translate(' + 
+	                                  (pos.x - 12/2) + ',' + (pos.y - 12/2) + 
+	                            ')');
+				    });
+				
+
+			       
+
+				var renderer = Viva.Graph.View.renderer(graph, {
+					graphics   : graphics,
+					container  : document.getElementById('search-graph'),
+				});
+				renderer.run();
+
 			},
 			error : function() {
+				$('#search-button').button('reset');
+				$('#search-list').spin(false);
+				
 				console.debug("error");
 			}
 		});
+		$('#search-button').button('loading');
+		$('#search-list').spin('small', 'gray');
 	}
 });
 

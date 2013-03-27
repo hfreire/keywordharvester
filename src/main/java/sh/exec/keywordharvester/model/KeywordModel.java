@@ -8,7 +8,7 @@ public class KeywordModel extends KeywordHarvesterModel {
 	private List<RelatedKeywordModel> relatedKeywords;
 
 	public KeywordModel() {
-		
+		relatedKeywords = new LinkedList<RelatedKeywordModel>();
 	}
 	
 	public KeywordModel(String text) {

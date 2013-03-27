@@ -81,6 +81,10 @@ public class ResultSet {
         }
         return this.result;
     }
+    
+    public void setResult(List<ResultType> result) {
+    	this.result = result;
+    }
 
     /**
      * Gets the value of the base property.
