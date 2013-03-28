@@ -1,6 +1,7 @@
 package sh.exec.keywordharvester.model;
 
 public class RelatedKeywordModel extends KeywordHarvesterModel {
+	private static final long serialVersionUID = -3089488284659041878L;
 	private KeywordModel keyword;
 	private KeywordModel relatedKeyword;
 	private double relevancy;
@@ -45,5 +46,9 @@ public class RelatedKeywordModel extends KeywordHarvesterModel {
 	public String toString() {
 		return "RelatedKeywordModel [keyword=" + keyword + ", relatedKeyword="
 				+ relatedKeyword + ", relevancy=" + relevancy + "]";
+	}
+
+	public String getKey() {
+		return keyword.getKey();
 	}
 }

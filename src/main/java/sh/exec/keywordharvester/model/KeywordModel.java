@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class KeywordModel extends KeywordHarvesterModel {
+	private static final long serialVersionUID = 3121616016712359410L;
 	private String text;
 	private List<RelatedKeywordModel> relatedKeywords;
 
@@ -36,5 +37,9 @@ public class KeywordModel extends KeywordHarvesterModel {
 
 	public String toString() {
 		return "KeywordModel [text=" + text + "]";
+	}
+
+	public String getKey() {
+		return text;
 	}
 }
