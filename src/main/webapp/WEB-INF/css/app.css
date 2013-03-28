@@ -44,8 +44,8 @@
 	width: 140px;
 }
 
-.tabbable {
-	margin-top: 100px;
+#search-tabs {
+	margin-top: 20px;
 }
 
 #search-graph {
@@ -78,4 +78,36 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 
 .input-xxlarge {
 	width: 350px;
+}
+
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+	font-size: 20px;
+}
+
+#search-details {
+	min-height: 40px;
+	text-align: center;
+	margin-top: 30px;
+}
+
+#search-details h5 {
+	font-size: 14px;
+	color: #cccccc;
+	font-weight: normal;
+}
+
+#search-list h5 {
+	text-align: center;
+	margin-top: 30px;
+	font-size: 14px;
+	color: #cccccc;
+	font-weight: normal;	
+}
+
+#search-graph h5 {
+	text-align: center;
+	margin-top: 70px;
+	font-size: 14px;
+	color: #cccccc;
+	font-weight: normal;	
 }

@@ -35,8 +35,6 @@
 	</div>
 	<script type="text/html" id='search-view'>
 		<div class="row-fluid">
-		</div>
-		<div class="row-fluid">
 			<div class="span12">
 				<form class="navbar-search" onsubmit="return false">
 	  					<input type="text" class="input-xxlarge" placeholder="Search">
@@ -57,7 +55,12 @@
 			</div>
 		</div>
 		<div class="row-fluid">
-			<div class="span12">
+			<div id="search-details" class="span12">
+				<h5></h5>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div id="search-tabs" class="span12">
 
 				<div class="tabbable">
   					<ul class="nav nav-tabs">

@@ -16,21 +16,27 @@ window.SearchView = Backbone.View.extend({
 	},
 	
 	submitted : function(event) {
-		if ($('input[placeholder=Search]').val() == "")
+		if ($('input[placeholder=Search]').val() == "") {
+			this.model.set({id: null});
+			$('#search-list').html("<h5>Type in a keyword to search!</h5>");
+			$('#search-graph').html("<h5>Type in a keyword to search!</h5>");
 			return;
+		}
 
 		var start = Date.now();
 		this.model.set({id: $('input[placeholder=Search]').val()}).fetch({
 			data : $.param({ 'api': $('input[checked=checked]').val()}),
 			success : function(model) {
 				var stop = Date.now();
-				console.debug(stop-start);
-				$('input[placeholder=Search]').val(model.id)
+				$('#search-details h5').html(model.get('relatedKeywords').size() + " related keywords in " + (stop-start)/1000 + " seconds");
+				
+				$('input[placeholder=Search]').val(model.id);
 				$('#search-button').button('reset');
 				$('#search-list').spin(false);
 				
 				if (model.get('message')) {
-					model.clear();
+					$('#search-list').html("<h5>" + model.get('message') + "</h5>");
+					$('#search-graph').html("<h5>" + model.get('message') + "</h5>");
 					return;
 				}
 				
