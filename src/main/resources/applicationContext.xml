@@ -5,17 +5,20 @@
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:cache='http://www.springframework.org/schema/cache'
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+        http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
 	<context:component-scan base-package="sh.exec"/>
   	<context:property-placeholder location="classpath:*.properties"/>
   	<tx:annotation-driven />
 	<aop:aspectj-autoproxy />
+	<cache:annotation-driven />
 
 	<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
 		<property name="usePool" value="true" />
@@ -27,10 +30,9 @@
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
 		<property name="connectionFactory" ref="jedisConnectionFactory"/>
 	</bean>
-
-	<bean id="keywordRedisMap" class="org.springframework.data.redis.support.collections.DefaultRedisMap">
+	
+	<bean id='cacheManager' class='org.springframework.data.redis.cache.RedisCacheManager'>
 		<constructor-arg ref="redisTemplate"/>
-		<constructor-arg index="0" type="sh.exec.keywordharvester.model.KeywordModel" value="redMap"/>
 	</bean>
 
 	<bean id="httpClientParams" class="org.apache.commons.httpclient.params.HttpClientParams">
@@ -68,5 +70,4 @@
     </bean>
 
 	<bean class="sh.exec.keywordharvester.service.VeryRelatedLoggingAspect" />
-	<bean class="sh.exec.keywordharvester.service.KeywordHarvesterCachingAspect" />
 </beans>
