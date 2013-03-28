@@ -19,9 +19,12 @@ window.SearchView = Backbone.View.extend({
 		if ($('input[placeholder=Search]').val() == "")
 			return;
 
+		var start = Date.now();
 		this.model.set({id: $('input[placeholder=Search]').val()}).fetch({
 			data : $.param({ 'api': $('input[checked=checked]').val()}),
 			success : function(model) {
+				var stop = Date.now();
+				console.debug(stop-start);
 				$('input[placeholder=Search]').val(model.id)
 				$('#search-button').button('reset');
 				$('#search-list').spin(false);
@@ -64,9 +67,6 @@ window.SearchView = Backbone.View.extend({
 	                                  (pos.x - 12/2) + ',' + (pos.y - 12/2) + 
 	                            ')');
 				    });
-				
-
-			       
 
 				var renderer = Viva.Graph.View.renderer(graph, {
 					graphics   : graphics,
