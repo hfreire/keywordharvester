@@ -13,6 +13,7 @@ import sh.exec.keywordharvester.exception.NoRelatedKeywordsFoundException;
 import sh.exec.keywordharvester.exception.UnableToHarvestKeywordException;
 import sh.exec.keywordharvester.model.KeywordModel;
 import sh.exec.keywordharvester.service.VeryRelatedService;
+import sh.exec.keywordharvester.service.WebKnoxService;
 
 import javax.inject.Inject;
 
@@ -22,13 +23,21 @@ public class KeywordController {
 	@Inject
 	private VeryRelatedService veryRelatedService;
 	
+	@Inject
+	private WebKnoxService webKnoxService;
+
 	@RequestMapping(value = "{text}", method = GET)
 	@ResponseBody
 	public KeywordModel getRelatedKeywords(
 			@PathVariable String text, 
 			@RequestParam(value = "api", required = true) String api)
 					throws UnableToHarvestKeywordException, NoRelatedKeywordsFoundException {
-		return veryRelatedService.harvestRelatedKeywordsFromKeywordString(text);
+
+		if (api.equals("veryrelated")) {
+			return veryRelatedService.harvestRelatedKeywordsFromKeywordString(text);
+		}
+		else
+			return webKnoxService.harvestRelatedKeywordsFromKeywordString(text);
 	}
 	
 	@ExceptionHandler(UnableToHarvestKeywordException.class)

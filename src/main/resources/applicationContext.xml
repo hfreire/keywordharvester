@@ -57,6 +57,7 @@
                     <property name="unmarshaller" ref="jaxbMarshaller"/>
                 </bean>
                 <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
             </list>
         </property>
     </bean>
@@ -70,4 +71,9 @@
     </bean>
 
 	<bean class="sh.exec.keywordharvester.service.VeryRelatedLoggingAspect" />
+	<bean class="sh.exec.keywordharvester.service.WebKnoxLoggingAspect" />
+	
+	<task:annotation-driven executor="taskExecutor" scheduler="taskScheduler"/>
+	<task:executor id="taskExecutor" pool-size="10"/>
+	<task:scheduler id="taskScheduler" pool-size="5"/>
 </beans>

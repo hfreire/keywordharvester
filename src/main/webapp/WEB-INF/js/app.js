@@ -23,7 +23,7 @@
 		},
 		
 		showSearch : function(id) {
-			app.currentView = app.showView('#search', new SearchView({model: app.keyword}));
+			app.currentView = app.showView('#search-box', new SearchBoxView({model: app.keyword}));
 		},
 		
 		doSearch : function(id) {

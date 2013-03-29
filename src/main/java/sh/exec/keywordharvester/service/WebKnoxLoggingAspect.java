@@ -14,10 +14,10 @@ import sh.exec.keywordharvester.model.KeywordModel;
 
 @Aspect
 @Order(1)
-public class VeryRelatedLoggingAspect {
-	private Log log = LogFactory.getLog(VeryRelatedService.class);
+public class WebKnoxLoggingAspect {
+	private Log log = LogFactory.getLog(WebKnoxService.class);
 
-	@Around("execution(* VeryRelatedService.harvestRelatedKeywordsFromKeywordString(..))")
+	@Around("execution(* WebKnoxService.*(..))")
 	public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
 		try {
 			KeywordModel keyword = (KeywordModel) joinPoint.proceed();
@@ -26,6 +26,7 @@ public class VeryRelatedLoggingAspect {
 			
 			return keyword;
 		} catch (Exception e) {
+			System.out.println(ExceptionUtils.getStackTrace(e));
 			if ((e instanceof KeywordHarvesterException && e.getCause() == null)
 					|| (e instanceof KeywordHarvesterException && (e.getCause() != null && (e
 							.getCause() instanceof KeywordHarvesterException))))

@@ -25,7 +25,8 @@
 				</div>
 			</div>
 		</div>
-		<div id="search"></div>
+		<div id="search-box"></div>
+		<div id="search-results"></div>
 		<div class="row-fluid">
 			<div id="footer" class="span12">
 				<a href="http://www.veryrelated.com/">Powered by VeryRelated Mind Maps API</a>
@@ -33,7 +34,7 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/html" id='search-view'>
+	<script type="text/html" id='search-box-view'>
 		<div class="row-fluid">
 			<div class="span12">
 				<form class="navbar-search" onsubmit="return false">
@@ -42,13 +43,16 @@
 
 					<div class="api-selection">
 					<label class="radio inline">
-  						<input type="radio" value="veryrelated" checked="checked"> VeryRelated API
+  						<input type="radio" name="api" value="veryrelated" checked> VeryRelated API
 					</label>
 					<label class="radio inline">
-  						<input type="radio" value="bing" disabled=disabled> Bing Search API
+  						<input type="radio" name="api" value="webknox"> WebKnox API
 					</label>
 					<label class="radio inline">
-  						<input type="radio" value="google" disabled=disabled> Google AdWords API
+  						<input type="radio" name="api" value="bing" disabled=disabled> Bing Search API
+					</label>
+					<label class="radio inline">
+  						<input type="radio" name="api" value="google" disabled=disabled> Google AdWords API
 					</label>
 					</div>
 				</form>
@@ -61,7 +65,10 @@
 		</div>
 		<div class="row-fluid">
 			<div id="search-tabs" class="span12">
-
+			</div>
+		</div
+	</script>
+	<script type="text/html" id='search-results-view'>
 				<div class="tabbable">
   					<ul class="nav nav-tabs">
     					<li class="active"><a href="#list" data-toggle="tab"><i class="icon-list"></i> List</a></li>
@@ -80,8 +87,6 @@
     					</div>
   					</div>
 				</div>
-			</div>
-		</div
 	</script>
 	<script type="text/html" id='search-list-item'>
 			<td><@= keyword.text @></td>

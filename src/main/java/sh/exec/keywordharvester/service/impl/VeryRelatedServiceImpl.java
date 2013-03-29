@@ -36,12 +36,11 @@ public class VeryRelatedServiceImpl implements VeryRelatedService {
 	@Value("${veryrelated.results}")
 	private String results;
 
-	// maximum HowRelated value observed by testing
+	// cold start values (maximum/minium values observed)
 	private final double observedMaxHowRelated = 140;
-	// minimum HowRelated value observed by testing
 	private final double observedMinHowRelated = -60;
 
-	@Cacheable(value ="keyword")
+	@Cacheable("keywordFromVeryRelated")
 	public KeywordModel harvestRelatedKeywordsFromKeywordString(
 			String stringKeyword) throws UnableToHarvestKeywordException,
 			NoRelatedKeywordsFoundException {

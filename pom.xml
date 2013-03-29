@@ -16,7 +16,7 @@
 		<aspectj-version>1.6.12</aspectj-version>
 		<log4j-version>1.2.16</log4j-version>
 		<slf4j-version>1.6.3</slf4j-version>
-		<servlet-version>2.5</servlet-version>
+		<servlet-version>3.0.1</servlet-version>
 		<java-version>1.6</java-version>
 		<mvn-compiler-version>2.3.2</mvn-compiler-version>
 		<jackson-version>1.9.4</jackson-version>
@@ -28,17 +28,21 @@
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit-dep</artifactId>
 			<version>4.8.2</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>${servlet-version}</version>
-			<scope>provided</scope>
-		</dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet-version}</version>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -89,6 +93,7 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>${jackson-version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
@@ -125,10 +130,28 @@
 			<version>${inject-version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-redis</artifactId>
-			<version>1.0.3.RELEASE</version>
-		</dependency>
+		 	<groupId>org.springframework.data</groupId>
+		 	<artifactId>spring-data-redis</artifactId>
+		 	<version>1.0.3.RELEASE</version>
+			<exclusions>
+			    <exclusion>
+			      <groupId>org.slf4j</groupId>
+			      <artifactId>slf4j-api</artifactId>
+			    </exclusion>
+			    <exclusion>
+			      <groupId>org.slf4j</groupId>
+			      <artifactId>jcl-over-slf4j</artifactId>
+			    </exclusion>
+			    <exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+			    </exclusion>
+			    <exclusion>
+			      <groupId>org.slf4j</groupId>
+			      <artifactId>slf4j-log4j12</artifactId>
+			    </exclusion>
+			  </exclusions>
+		</dependency> 
 	</dependencies>
 	<build>
 		<plugins>
@@ -164,7 +187,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.12</version>
 				<configuration>
-					<skipTests>true</skipTests>
+					<skipTests>false</skipTests>
 				</configuration>
 			</plugin>
 		</plugins>

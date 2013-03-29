@@ -36,7 +36,7 @@ public class KeywordModel extends KeywordHarvesterModel {
 	}
 
 	public String toString() {
-		return "KeywordModel [text=" + text + "]";
+		return "KeywordModel [text=" + text + " relatedKeywords=" + relatedKeywords.size() + "]";
 	}
 
 	public String getKey() {
