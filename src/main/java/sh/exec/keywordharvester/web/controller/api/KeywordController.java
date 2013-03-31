@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import sh.exec.keywordharvester.exception.KeywordHarvesterException;
 import sh.exec.keywordharvester.exception.NoRelatedKeywordsFoundException;
 import sh.exec.keywordharvester.exception.UnableToHarvestKeywordException;
+import sh.exec.keywordharvester.exception.UnknownKeywordHarvesterApiException;
 import sh.exec.keywordharvester.model.KeywordModel;
-import sh.exec.keywordharvester.service.VeryRelatedService;
-import sh.exec.keywordharvester.service.WebKnoxService;
+import sh.exec.keywordharvester.service.KeywordHarvesterService;
 
 import javax.inject.Inject;
 
@@ -21,34 +22,22 @@ import javax.inject.Inject;
 @RequestMapping("/api/keyword")
 public class KeywordController {
 	@Inject
-	private VeryRelatedService veryRelatedService;
-	
-	@Inject
-	private WebKnoxService webKnoxService;
+	private KeywordHarvesterService keywordHarvesterService;
 
 	@RequestMapping(value = "{text}", method = GET)
 	@ResponseBody
 	public KeywordModel getRelatedKeywords(
 			@PathVariable String text, 
 			@RequestParam(value = "api", required = true) String api)
-					throws UnableToHarvestKeywordException, NoRelatedKeywordsFoundException {
+					throws UnableToHarvestKeywordException, 
+					NoRelatedKeywordsFoundException, UnknownKeywordHarvesterApiException {
 
-		if (api.equals("veryrelated")) {
-			return veryRelatedService.harvestRelatedKeywordsFromKeywordString(text);
-		}
-		else
-			return webKnoxService.harvestRelatedKeywordsFromKeywordString(text);
+			return keywordHarvesterService.harvestRelatedKeywordsFromKeywordStringByApi(text, api);
 	}
 	
-	@ExceptionHandler(UnableToHarvestKeywordException.class)
+	@ExceptionHandler(KeywordHarvesterException.class)
 	@ResponseBody
-	public Notification onUnableToHarvestKeywordException(UnableToHarvestKeywordException e) {
-		return new Notification(e.getMessage());
-	}
-	
-	@ExceptionHandler(NoRelatedKeywordsFoundException.class)
-	@ResponseBody
-	public Notification onNoRelatedKeywordsFoundException(NoRelatedKeywordsFoundException e) {
+	public Notification onKeywordHarvestKeywordException(KeywordHarvesterException e) {
 		return new Notification(e.getMessage());
 	}
 }

@@ -73,6 +73,18 @@
 	<bean class="sh.exec.keywordharvester.service.VeryRelatedLoggingAspect" />
 	<bean class="sh.exec.keywordharvester.service.WebKnoxLoggingAspect" />
 	
+	<bean id="veryRelatedService" class="sh.exec.keywordharvester.service.impl.VeryRelatedServiceImpl" />
+	<bean id="webKnoxService" class="sh.exec.keywordharvester.service.impl.WebKnoxServiceImpl" />
+	
+	<bean id="keywordHarvesterService" class="sh.exec.keywordharvester.service.KeywordHarvesterAdapter">
+		<property name="apis">
+			<map>
+				<entry key="veryrelated" value-ref="veryRelatedService" />
+				<entry key="webknox" value-ref="webKnoxService" />
+			</map>
+		</property>
+	</bean>
+	
 	<task:annotation-driven executor="taskExecutor" scheduler="taskScheduler"/>
 	<task:executor id="taskExecutor" pool-size="10"/>
 	<task:scheduler id="taskScheduler" pool-size="5"/>

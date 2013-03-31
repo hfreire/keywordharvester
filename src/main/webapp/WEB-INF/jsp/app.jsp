@@ -103,6 +103,8 @@
 	<script src="/js/lib/spin.min.js"></script>
 	<script src="/js/lib/jquery.spin.js"></script>
 	<script src="/js/lib/vivagraph.min.js"></script>
+	<script src="/js/lib/arbor.js"></script>
+	<script src="/js/lib/arbor-tween.js"></script>
 	<script src="/js/models/keywordmodel.js"></script>
 	<script src="/js/models/relatedkeywordmodel.js"></script>
 	<script src="/js/views/searchview.js"></script>
