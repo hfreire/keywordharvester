@@ -76,11 +76,11 @@ public class WebKnoxServiceImpl implements WebKnoxService {
 				rootNode = mapper.readTree(restTemplate.getForObject(url,
 						String.class, vars));
 			} catch (RestClientException e) {
-				System.out.println("AQUI\n\n\n");
 				// if we get a 401, probably our key has expired
 				// so we need to fetch a new api key and retry the request
 				if (e.getMessage().equals("401 Unauthorized")) {
 					fetchApiKeyFromWebPage();
+					vars.put("key", key);
 					rootNode = mapper.readTree(restTemplate.getForObject(url,
 							String.class, vars));
 				}
