@@ -14,11 +14,10 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,16 +37,21 @@ public class WebKnoxServiceImpl implements WebKnoxService {
 	
 	@Inject
 	private RestTemplate restTemplate;
+	
+	@Inject
+	private HttpClient httpClient;
 
 	@Value("${webknox.url}")
 	private String url;
 	
 	@Value("${webknox.url.key}")
-	private String urlKey;
+	private String urlKey = "";
 
 	private String key = null;
 
-	// cold start values (maximum observed values)
+	/**
+	 *  cold start values (maximum observed values from previous experiments)
+	 */
 	private double maxCpc = 30.74;
 	private int maxSerpsBroad = 1890000000;
 	private int maxPpcAdvertisers = 50;
@@ -76,8 +80,9 @@ public class WebKnoxServiceImpl implements WebKnoxService {
 				rootNode = mapper.readTree(restTemplate.getForObject(url,
 						String.class, vars));
 			} catch (RestClientException e) {
-				// if we get a 401, probably our key has expired
-				// so we need to fetch a new api key and retry the request
+				/* if we get a 401, probably our key has expired
+				 * so we need to fetch a new api key and retry the request
+				 */
 				if (e.getMessage().equals("401 Unauthorized")) {
 					fetchApiKeyFromWebPage();
 					vars.put("key", key);
@@ -99,8 +104,9 @@ public class WebKnoxServiceImpl implements WebKnoxService {
 			double top10GoogleKeywordContainmentInURL = 0.0;
 
 			for (int i = 0; i < rootNode.size(); i++) {
-				// WebKnox related keyword API is known for returning the
-				// original keyword as a related keyword
+				/* WebKnox related keyword API is known for returning the
+				 * original keyword as a related keyword
+				 */
 				if (rootNode.path(i).path("keyword").asText()
 						.equals(keyword.getText()))
 					continue;
@@ -109,8 +115,9 @@ public class WebKnoxServiceImpl implements WebKnoxService {
 				relatedKeyword.setKeyword(new KeywordModel(rootNode.path(i)
 						.path("keyword").asText()));
 
-				// parse all the necessary input to calculate keyword related
-				// relevancy
+				/* parse all the necessary input to calculate keyword related
+				 * relevancy
+				 */
 				if (rootNode.path(i).has("cpc")) {
 					cpc = rootNode.path(i).path("cpc").asDouble();
 					if (cpc > maxCpc)
@@ -236,41 +243,53 @@ public class WebKnoxServiceImpl implements WebKnoxService {
 			throw new UnableToHarvestKeywordException(keyword, e);
 		} catch (HttpMessageNotReadableException e) {
 			throw new NoRelatedKeywordsFoundException(keyword);
-		} catch (HttpException e) {
+		} catch (ClientProtocolException e) {
 			throw new UnableToHarvestKeywordException(keyword, e);
 		} catch (IOException e) {
 			throw new UnableToHarvestKeywordException(keyword, e);
 		}
 	}
 
+	/**
+	 * 
+	 * @param cpc cost-per-click
+	 * @param serpsBroad number of search results on google in broad mode
+	 * @param ppcAdvertisers number of pay-per-click advertisers
+	 * @param monthlyExactSearches number of exact searches per month
+	 * @param serpsPhraseInUrl number of search results on google if searching in URLs
+	 * @param monthlyBroadSearches number of broad searches per month
+	 * @param serpsPhraseInTitle number of search results on google if searching in title
+	 * @param serpsPhrase number of search on google in phrase mode
+	 * @param top10GoogleKeywordContainmentInHeadline
+	 * @param top10GoogleKeywordContainmentInTitle
+	 * @param top10GoogleKeywordContainmentInURL
+	 * @return a double meaning the relevancy of the related keyword
+	 * 
+	 * @description calculate the relevancy of a related keyword based on multiple
+	 * parameters
+	 */
 	private double calculateRelevancy(
-			double cpc, // the cost-per-click
-			double serpsBroad, // the number of search results on google in
-								// broad mode
-			double ppcAdvertisers, // the number of pay-per-click advertisers
-			double monthlyExactSearches, // the number of exact searchs per
-											// month
-			double serpsPhraseInUrl, // the number of search results on google
-										// if
-										// searching in URLs
-			double monthlyBroadSearches, // the number of broad searchs per
-											// month
-			double serpsPhraseInTitle, // the number of search results on google
-										// if
-										// searching in title
-			double serpsPhrase, // the number of search on google in phrase mode
+			double cpc,
+			double serpsBroad,
+			double ppcAdvertisers,
+			double monthlyExactSearches,
+			double serpsPhraseInUrl,
+			double monthlyBroadSearches,
+			double serpsPhraseInTitle,
+			double serpsPhrase,
 			double top10GoogleKeywordContainmentInHeadline,
 			double top10GoogleKeywordContainmentInTitle,
 			double top10GoogleKeywordContainmentInURL) {
 
 		double relevancy = 0;
 
-		cpc = 1 - normalize(cpc, 0, maxCpc); // we want the inverse: source
-												// Wikipedia: inexpensive ads
-												// that few people click on will
-												// have a low cost per
-												// impression and a high cost
-												// per click
+		/*
+		 * we want the inverse: source Wikipedia: inexpensive ads
+		 * that few people click on will have a low cost per 
+		 * impression and a high cost per click
+		 */
+		cpc = 1 - normalize(cpc, 0, maxCpc);
+
 		serpsBroad = normalize(serpsBroad, 0, maxSerpsBroad);
 		ppcAdvertisers = normalize(serpsBroad, 0, maxPpcAdvertisers);
 		monthlyExactSearches = normalize(monthlyExactSearches, 0,
@@ -314,27 +333,16 @@ public class WebKnoxServiceImpl implements WebKnoxService {
 		return ((double) temp) / Math.pow(10, c);
 	}
 
-	// a method for fetching a valid api key from webknox api webpage
-	public void fetchApiKeyFromWebPage() throws HttpException, IOException {
-		HttpClient httpclient = new HttpClient();
-		httpclient.getParams().setParameter("http.connection.timeout",
-				new Integer(50000000));
-		httpclient.getParams().setParameter("http.socket.timeout",
-				new Integer(50000000));
-		httpclient
-				.getParams()
-				.setParameter(
-						HttpMethodParams.USER_AGENT,
-						"Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
+	/**
+	 * 
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @description a method for fetching a valid api key from webknox api webpage
+	 */
+	public void fetchApiKeyFromWebPage() throws ClientProtocolException, IOException {
+		HttpResponse response = httpClient.execute(new HttpGet(urlKey));
 
-		GetMethod method = new GetMethod(urlKey);
-
-		if (httpclient.executeMethod(method) != HttpStatus.SC_OK) {
-			key = null;
-			return;
-		}
-
-		InputStream stream = method.getResponseBodyAsStream();
+		InputStream stream = response.getEntity().getContent();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				stream, "ISO8859_8"));
 

@@ -1,0 +1,9 @@
+sh.exec.keywordharvester.config
+sh.exec.keywordharvester.exception
+sh.exec.keywordharvester.model
+sh.exec.keywordharvester.service
+sh.exec.keywordharvester.service.impl
+sh.exec.keywordharvester.service.impl.veryrelated
+sh.exec.keywordharvester.test
+sh.exec.keywordharvester.web.controller
+sh.exec.keywordharvester.web.controller.api

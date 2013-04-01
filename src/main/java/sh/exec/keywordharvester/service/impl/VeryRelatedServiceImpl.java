@@ -36,7 +36,9 @@ public class VeryRelatedServiceImpl implements VeryRelatedService {
 	@Value("${veryrelated.results}")
 	private String results;
 
-	// cold start values (maximum/minium values observed)
+	/**
+	 *  cold start values (maximum/minimum values observed in previous experiments)
+	 */
 	private final double observedMaxHowRelated = 140;
 	private final double observedMinHowRelated = -60;
 
@@ -83,10 +85,16 @@ public class VeryRelatedServiceImpl implements VeryRelatedService {
 		}
 	}
 
-	// calculate the relevancy for each related keyword by doing the average 
-	// between the normalized HowRelated values from the current query results
-	// and the normalized HowRelated values from previous observed query
-	// results
+	/**
+	 * 
+	 * @param relatedKeywords list of related keywords with calculated relevancy
+	 * @param maxHowRelated HowRelated maximum value observed in the current query
+	 * @param minHowRelated HowRelated minimum value observed in the current query
+	 * 
+	 * @description calculate the relevancy for each related keyword by doing the average
+	 * between the normalized HowRelated values from the current query results
+	 * and the normalized HowRelated values from previous observed query results
+	 */
 	private void calculateRelevancyFromHowRelated(
 			List<RelatedKeywordModel> relatedKeywords, double maxHowRelated,
 			double minHowRelated) {

@@ -9,9 +9,9 @@
 	<url>http://exec.sh</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jetty-version>7.6.3.v20120416</jetty-version>
+		<jetty-version>8.1.8.v20121106</jetty-version>
 		<jetty-plugin-version>${jetty-version}</jetty-plugin-version>
-		<spring-version>3.1.1.RELEASE</spring-version>
+		<spring-version>3.1.2.RELEASE</spring-version>
 		<hibernate-version>4.0.1.Final</hibernate-version>
 		<aspectj-version>1.6.12</aspectj-version>
 		<log4j-version>1.2.16</log4j-version>
@@ -25,8 +25,15 @@
 		<mockito-version>1.9.5</mockito-version>
 		<commons-httpclient-version>3.1</commons-httpclient-version>
 		<inject-version>1</inject-version>
+		<cglib-version>2.2.2</cglib-version>
+		<httpclient-version>4.2.3</httpclient-version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>${cglib-version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
@@ -120,10 +127,10 @@
 			<version>${mockito-version}</version>
 		</dependency>
 		<dependency>
-	        <groupId>commons-httpclient</groupId>
-	        <artifactId>commons-httpclient</artifactId>
-	        <version>${commons-httpclient-version}</version>
-	    </dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${httpclient-version}</version>
+		</dependency>
 		<dependency>
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>

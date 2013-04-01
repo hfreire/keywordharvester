@@ -82,7 +82,10 @@
     					</div>
     					<div class="tab-pane" id="graph">
 							<div class="row-fluid">
-								<div id="search-graph"></div>
+								<!-- <div id="search-graph"></div> -->
+								<div class="offset2 span8">
+									<canvas id="search-graph" width="800" height="600"></canvas>
+								</div>
 							</div>
     					</div>
   					</div>
@@ -105,6 +108,7 @@
 	<script src="/js/lib/vivagraph.min.js"></script>
 	<script src="/js/lib/arbor.js"></script>
 	<script src="/js/lib/arbor-tween.js"></script>
+	<script src="/js/lib/arbor-graphics.js"></script>
 	<script src="/js/models/keywordmodel.js"></script>
 	<script src="/js/models/relatedkeywordmodel.js"></script>
 	<script src="/js/views/searchview.js"></script>

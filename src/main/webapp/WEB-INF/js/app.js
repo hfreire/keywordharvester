@@ -22,13 +22,23 @@
 			return view;
 		},
 		
-		showSearch : function(id) {
+		showSearch : function(callback) {
 			app.currentView = app.showView('#search-box', new SearchBoxView({model: app.keyword}));
+			if (callback)
+				callback();
 		},
 		
 		doSearch : function(id) {
-			$('input[placeholder=Search]').val(id);
-			app.currentView.submitted();
+			if(app.currentView) {
+				$('input[placeholder=Search]').val(id);
+				app.currentView.submitted();
+			}
+			else {
+				this.showSearch(function() {
+					$('input[placeholder=Search]').val(id);
+					app.currentView.submitted();
+				});
+			}
 		}
 	});
 	
