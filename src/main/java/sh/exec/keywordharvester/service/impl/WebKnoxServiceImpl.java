@@ -21,6 +21,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -61,6 +62,7 @@ public class WebKnoxServiceImpl implements WebKnoxService {
 	private int maxSerpsPhraseInTitle = 45500;
 	private int maxSerpsPhrase = 89900000;
 
+	@Cacheable("webKnoxCache")
 	public KeywordModel harvestRelatedKeywordsFromKeywordString(
 			String stringKeyword) throws UnableToHarvestKeywordException,
 			NoRelatedKeywordsFoundException {

@@ -1,6 +1,7 @@
 package sh.exec.keywordharvester.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -34,7 +35,9 @@ public class DatabaseConfig {
 	}
 	
 	@Bean
-	public RedisCacheManager redisCacheManager() {
-		return new RedisCacheManager(redisTemplate());
+	public CacheManager redisCacheManager() {
+		RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate());
+		redisCacheManager.setUsePrefix(true);
+		return redisCacheManager;
 	}
 }

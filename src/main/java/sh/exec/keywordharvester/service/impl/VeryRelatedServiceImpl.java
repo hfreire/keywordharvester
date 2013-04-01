@@ -42,7 +42,7 @@ public class VeryRelatedServiceImpl implements VeryRelatedService {
 	private final double observedMaxHowRelated = 140;
 	private final double observedMinHowRelated = -60;
 
-	@Cacheable("keywordFromVeryRelated")
+	@Cacheable("veryRelatedCache")
 	public KeywordModel harvestRelatedKeywordsFromKeywordString(
 			String stringKeyword) throws UnableToHarvestKeywordException,
 			NoRelatedKeywordsFoundException {

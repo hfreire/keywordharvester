@@ -136,4 +136,14 @@ public class AppConfig implements ApplicationContextAware {
 	public WebKnoxLoggingAspect webKnoxLoggingAspect() {
 		return new WebKnoxLoggingAspect();
 	}
+	
+//	@Bean
+//    public CacheManager cacheManager() {
+//        SimpleCacheManager cacheManager = new SimpleCacheManager();
+//        List<ConcurrentMapCache> caches = new ArrayList<ConcurrentMapCache>();
+//        caches.add(new ConcurrentMapCache("veryRelatedCache"));
+//        caches.add(new ConcurrentMapCache("webKnoxCache"));
+//        cacheManager.setCaches(caches);
+//        return cacheManager;
+//    }
 }

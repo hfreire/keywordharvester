@@ -82,10 +82,12 @@
     					</div>
     					<div class="tab-pane" id="graph">
 							<div class="row-fluid">
-								<!-- <div id="search-graph"></div> -->
 								<div class="offset2 span8">
+									<div id="search-graph"></div>
+								</div> 
+								<!--<div class="offset2 span8">
 									<canvas id="search-graph" width="800" height="600"></canvas>
-								</div>
+								</div>-->
 							</div>
     					</div>
   					</div>
