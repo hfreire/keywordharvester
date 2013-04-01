@@ -17,14 +17,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("**")
-                .addResourceLocations("/WEB-INF/");
+                .addResourceLocations("/");
     }
     
     @Bean
 	public ViewResolver viewResolver() {
 		UrlBasedViewResolver resolver = new UrlBasedViewResolver();
 		resolver.setViewClass(JstlView.class);
-		resolver.setPrefix("/WEB-INF/jsp/");
+		resolver.setPrefix("/jsp/");
 		resolver.setSuffix(".jsp");
 		return resolver;
 	}
