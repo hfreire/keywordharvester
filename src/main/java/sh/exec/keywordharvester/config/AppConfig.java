@@ -29,10 +29,9 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 
+import sh.exec.keywordharvester.aspect.KeywordHarvesterLoggingAspect;
 import sh.exec.keywordharvester.service.KeywordHarvesterAdapter;
-import sh.exec.keywordharvester.service.VeryRelatedLoggingAspect;
 import sh.exec.keywordharvester.service.VeryRelatedService;
-import sh.exec.keywordharvester.service.WebKnoxLoggingAspect;
 import sh.exec.keywordharvester.service.WebKnoxService;
 
 @ComponentScan(basePackages = "sh.exec.keywordharvester")
@@ -126,15 +125,10 @@ public class AppConfig implements ApplicationContextAware {
 
 		return keywordHarvesterAdapter;
 	}
-	
+
 	@Bean
-	public VeryRelatedLoggingAspect veryRelatedLoggingAspect() {
-		return new VeryRelatedLoggingAspect();
-	}
-	
-	@Bean
-	public WebKnoxLoggingAspect webKnoxLoggingAspect() {
-		return new WebKnoxLoggingAspect();
+	public KeywordHarvesterLoggingAspect keywordHarvesterLoggingAspect() {
+		return new KeywordHarvesterLoggingAspect();
 	}
 	
 //	@Bean

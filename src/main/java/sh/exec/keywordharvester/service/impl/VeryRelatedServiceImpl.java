@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import sh.exec.keywordharvester.aspect.Loggable;
 import sh.exec.keywordharvester.exception.NoRelatedKeywordsFoundException;
 import sh.exec.keywordharvester.exception.UnableToHarvestKeywordException;
 import sh.exec.keywordharvester.model.KeywordModel;
@@ -20,6 +21,7 @@ import sh.exec.keywordharvester.model.RelatedKeywordModel;
 import sh.exec.keywordharvester.service.VeryRelatedService;
 import sh.exec.keywordharvester.service.impl.veryrelated.ResultSet;
 import sh.exec.keywordharvester.service.impl.veryrelated.ResultType;
+
 
 @Service
 public class VeryRelatedServiceImpl implements VeryRelatedService {
@@ -42,6 +44,7 @@ public class VeryRelatedServiceImpl implements VeryRelatedService {
 	private final double observedMaxHowRelated = 140;
 	private final double observedMinHowRelated = -60;
 
+	@Loggable
 	@Cacheable("veryRelatedCache")
 	public KeywordModel harvestRelatedKeywordsFromKeywordString(
 			String stringKeyword) throws UnableToHarvestKeywordException,

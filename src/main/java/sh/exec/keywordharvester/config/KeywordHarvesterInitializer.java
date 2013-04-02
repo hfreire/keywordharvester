@@ -15,8 +15,7 @@ public class KeywordHarvesterInitializer implements WebApplicationInitializer {
 	public void onStartup(ServletContext servletContext)
 			throws ServletException {
 		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-		context.scan("sh.exec.keywordharvester.config");
-		
+		context.scan("sh.exec.keywordharvester.config");		
 		servletContext.addListener(new ContextLoaderListener(context));
 
 		ServletRegistration.Dynamic dispatcherServlet = servletContext

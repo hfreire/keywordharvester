@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import sh.exec.keywordharvester.aspect.Loggable;
 import sh.exec.keywordharvester.exception.NoRelatedKeywordsFoundException;
 import sh.exec.keywordharvester.exception.UnableToHarvestKeywordException;
 import sh.exec.keywordharvester.model.KeywordModel;
@@ -61,7 +62,8 @@ public class WebKnoxServiceImpl implements WebKnoxService {
 	private int maxMonthlyBroadSearches = 3350000;
 	private int maxSerpsPhraseInTitle = 45500;
 	private int maxSerpsPhrase = 89900000;
-
+	
+	@Loggable
 	@Cacheable("webKnoxCache")
 	public KeywordModel harvestRelatedKeywordsFromKeywordString(
 			String stringKeyword) throws UnableToHarvestKeywordException,
@@ -224,6 +226,9 @@ public class WebKnoxServiceImpl implements WebKnoxService {
 
 				keyword.getRelatedKeywords().add(relatedKeyword);
 			}
+			
+			if (keyword.getRelatedKeywords().isEmpty())
+				throw new NoRelatedKeywordsFoundException(keyword);
 
 			Collections.sort(keyword.getRelatedKeywords(),
 					new Comparator<RelatedKeywordModel>() {
