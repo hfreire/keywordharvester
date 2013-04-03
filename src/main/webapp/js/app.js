@@ -1,4 +1,11 @@
-(function() {
+define([
+  'jquery', 
+  'underscore', 
+  'backbone',
+  'models/keywordmodel',
+  'views/searchboxview'
+], function($, _, Backbone){
+	
 	Backbone.View.prototype.close = function() {
 		if (this.beforeClose) {
 			this.beforeClose();
@@ -41,15 +48,22 @@
 			}
 		}
 	});
-	
-	app = new AppRouter();
-	app.keyword = new KeywordModel();
-	Backbone.history.start();
 
-})();
-
-_.templateSettings = {
-	    interpolate: /\<\@\=(.+?)\@\>/gim,
-	    evaluate: /\<\@([\s\S]+?)\@\>/gim,
-	    escape: /\<\@\-(.+?)\@\>/gim
+	var initialize = function(){
+		app = new AppRouter();
+		app.keyword = new KeywordModel();
+		Backbone.history.start();
+		
+		_.templateSettings = {
+			    interpolate: /\<\@\=(.+?)\@\>/gim,
+			    evaluate: /\<\@([\s\S]+?)\@\>/gim,
+			    escape: /\<\@\-(.+?)\@\>/gim
+		};
+		
 	};
+	
+	
+  return { 
+    initialize: initialize
+  };
+});

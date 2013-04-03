@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -98,22 +97,7 @@
 			<td><@= relevancy @></td>
 			<td><a href="#search/<@= keyword.text @>" style="width:100%;display:block;"><i class="icon-search"></i></a></td>
 	</script>
-	<script src="/js/lib/jquery.min.js"></script>
-	<script src="/js/lib/jquery.form.js"></script>
-	<script src="/js/lib/bootstrap.min.js"></script>
-	<script src="/js/lib/underscore.js"></script>
-	<script src="/js/lib/json2.js"></script>
-	<script src="/js/lib/backbone.js"></script>
-	<script src="/js/lib/backbone-relational.js"></script>
-	<script src="/js/lib/spin.min.js"></script>
-	<script src="/js/lib/jquery.spin.js"></script>
-	<script src="/js/lib/vivagraph.min.js"></script>
-	<script src="/js/lib/arbor.js"></script>
-	<script src="/js/lib/arbor-tween.js"></script>
-	<script src="/js/lib/arbor-graphics.js"></script>
-	<script src="/js/models/keywordmodel.js"></script>
-	<script src="/js/models/relatedkeywordmodel.js"></script>
-	<script src="/js/views/searchview.js"></script>
-	<script src="/js/app.js"></script>
+
+	<script data-main="js/main" src="js/lib/require.js"></script>
 </body>
 </html>
