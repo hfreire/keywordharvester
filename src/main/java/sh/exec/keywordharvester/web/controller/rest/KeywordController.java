@@ -1,4 +1,4 @@
-package sh.exec.keywordharvester.web.controller.api;
+package sh.exec.keywordharvester.web.controller.rest;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 

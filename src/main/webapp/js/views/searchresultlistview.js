@@ -1,36 +1,30 @@
 define([
   'jquery', 
   'underscore', 
-  'backbone-relational',
-  'views/searchresultlistitemview'
-], function($, _, Backbone){
+  'backbone.marionette',
+], function($, _, Marionette){
 
-	window.SearchListView = Backbone.View.extend({
-		tagName : 'table',
+	SearchListItemView = Marionette.ItemView.extend({
+		template: "#search-list-item-view",
+		tagName : 'tr',
 
-		className : 'table table-hover',
-
-		initialize : function() {
-
-			this.model.bind("reset", this.render, this);
-			var self = this;
-			this.model.bind("add", function(relatedKeyword) {
-				$(self.el).append(new SearchListItemView({
-					model : relatedKeyword
-				}).render().el);
-			});
-		},
-
-		render : function(eventName) {
-			_.each(this.model.models, function(relatedKeyword) {
-				$(this.el).append(new SearchListItemView({
-					model : relatedKeyword
-				}).render().el);
-			}, this);
-			return this;
-		}
 	});
 	
-	return window.SearchListView;
+	SearchResultListView = Marionette.CompositeView.extend({
+		template: "#search-list-view",
+		itemViewContainer: "tbody",
+		itemView: SearchListItemView,
+		tagName: "table",
+		className : 'table table-hover',
+
+		initialize: function(){
+	    },
+		
+		appendHtml: function(collectionView, itemView, index){
+			collectionView.$("tbody").append(itemView.el);
+		 },
+	});
+	
+	return SearchResultListView;
 	
 });

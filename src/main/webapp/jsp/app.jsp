@@ -16,6 +16,7 @@
 </head>
 <body>
 	<div id="app" class="container-fluid">
+	
 		<div id="header">
 			<div class="row-fluid">
 				<div class="offset2 span8">
@@ -24,21 +25,33 @@
 				</div>
 			</div>
 		</div>
-		<div id="search-box"></div>
-		<div id="search-results"></div>
-		<div class="row-fluid">
-			<div id="footer" class="span12">
-				<a href="http://www.veryrelated.com/">Powered by VeryRelated Mind Maps API</a>
-				<a href="http://exec.sh">Developed by hfreire@exec.sh</a>
+		
+		<div id="content"></div>
+		
+		<div id="footer">
+			<div class="row-fluid">
+				<div class="span12">
+					<a href="http://www.veryrelated.com/">Powered by VeryRelated Mind Maps API</a>
+					<a href="http://exec.sh">Developed by hfreire@exec.sh</a>
+				</div>
 			</div>
 		</div>
+		
 	</div>
+	
+	<script type="text/html" id='content-view'>
+		<div id="search-box"></div>
+		<div id="search-results"></div>
+	</script>
+
 	<script type="text/html" id='search-box-view'>
 		<div class="row-fluid">
 			<div class="span12">
 				<form class="navbar-search" onsubmit="return false">
 	  					<input type="text" class="input-xxlarge" placeholder="Search">
-	  					<button id="search-button" class="btn btn-large btn-primary" type="button" data-loading-text="Searching..."><i class="icon-search"></i> Search</button>
+	  					<button id="search-button" class="btn btn-large btn-primary" type="button" data-loading-text="Searching...">
+							<i class="icon-search"></i> Search
+						</button>
 
 					<div class="api-selection">
 					<label class="radio inline">
@@ -83,19 +96,45 @@
 							<div class="row-fluid">
 								<div class="offset2 span8">
 									<div id="search-graph"></div>
-								</div> 
-								<!--<div class="offset2 span8">
-									<canvas id="search-graph" width="800" height="600"></canvas>
-								</div>-->
+								</div>
 							</div>
     					</div>
   					</div>
 				</div>
 	</script>
-	<script type="text/html" id='search-list-item'>
+	
+	<script type="text/html" id='search-list-item-view'>
 			<td><@= keyword.text @></td>
 			<td><@= relevancy @></td>
 			<td><a href="#search/<@= keyword.text @>" style="width:100%;display:block;"><i class="icon-search"></i></a></td>
+	</script>
+	
+	<script type="text/html" id='search-list-view'>
+		<table>
+    <thead>
+      <tr>
+        <th>Keyword</th>
+        <th>Relevancy</th>
+		<th></th>
+      </tr>
+    </thead>
+
+    <tbody></tbody>
+
+    <tfoot>
+      <tr>
+        <td></td>
+		<td></td>
+		<td></td>
+      </tr>
+    </tfoot>
+  </table>
+	</script>
+
+	
+	
+	<script type="text/html" id='search-graph-view'>
+	    <div id="nodes"></div>
 	</script>
 
 	<script data-main="js/main" src="js/lib/require.js"></script>

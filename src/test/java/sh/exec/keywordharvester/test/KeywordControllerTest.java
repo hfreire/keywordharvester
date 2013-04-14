@@ -15,7 +15,7 @@ import sh.exec.keywordharvester.exception.UnknownKeywordHarvesterApiException;
 import sh.exec.keywordharvester.model.KeywordModel;
 import sh.exec.keywordharvester.model.RelatedKeywordModel;
 import sh.exec.keywordharvester.service.KeywordHarvesterAdapter;
-import sh.exec.keywordharvester.web.controller.api.KeywordController;
+import sh.exec.keywordharvester.web.controller.rest.KeywordController;
 
 @RunWith(MockitoJUnitRunner.class)
 public class KeywordControllerTest {

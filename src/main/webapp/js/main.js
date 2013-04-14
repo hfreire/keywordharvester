@@ -1,41 +1,51 @@
 require.config({
 	paths: {
-        "jquery": "lib/jquery.min",
-        "underscore": "lib/underscore",
-        "backbone": "lib/backbone",
-        "backbone-relational": "lib/backbone-relational",
-        "bootstrap": "lib/bootstrap.min",
-        "jquery.spin": "lib/jquery.spin",
-        "spin": "lib/spin.min",
-        "vivagraph": "lib/vivagraph.min"
+        'jquery': 'lib/jquery.min',
+        'underscore': 'lib/underscore',
+        'backbone': 'lib/backbone',
+        'backbone-relational': 'lib/backbone-relational',
+        'backbone.marionette': 'lib/backbone.marionette.min',
+        'backbone.wreqr' : 'lib/backbone.wreqr.min',
+        'backbone.babysitter' : 'lib/backbone.babysitter.min',
+        'bootstrap': 'lib/bootstrap.min',
+        'jquery.spin': 'lib/jquery.spin',
+        'spin': 'lib/spin.min',
+        'vivagraph': 'lib/vivagraph.min'
     },
     shim: {
-        "underscore": {
+        'underscore': {
             deps: [],
-            exports: "_"
+            exports: '_'
         },
-        "backbone": {
-            deps: ["jquery", "underscore"],
-            exports: "Backbone"
+        'backbone': {
+            deps: ['jquery', 'underscore'],
+            exports: 'Backbone'
         },
-        "backbone-relational": {
-            deps: ["backbone"],
-            exports: "Backbone"
+        'backbone-relational': {
+            deps: ['backbone'],
+            exports: 'Backbone'
         },
-        "bootstrap": {
-        	deps: ["jquery"]
+        'bootstrap': {
+        	deps: ['jquery']
         },
-        "jquery.spin": {
-        	deps: ["jquery", "spin"],
-        	exports: "Spinner"
-        }
+        'jquery.spin': {
+        	deps: ['jquery', 'spin'],
+        	exports: 'Spinner'
+        },
     } 
 });
 
 require([
-  'app',
+  'app', 
+  'controllers/keywordcontroller', 
+  'controllers/keywordrouter'], 
+function(App, KeywordController, KeywordRouter){
 
-], function(App){
-  App.initialize();
-  
+	var options = {
+		controller: KeywordController,
+		router: KeywordRouter
+    };
+    
+    App.start(options);
+    
 });
