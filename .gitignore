@@ -1,2 +1,7 @@
 /target
 .logs
+.idea
+.settings
+keywordharvester.iml
+.classpath
+.project
